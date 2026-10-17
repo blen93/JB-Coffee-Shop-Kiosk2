@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#5c3b2e">
+  <title>JB Coffee Shop | Self-Service Ordering</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="JB Coffee Shop home" id="brandHome">
+      <span class="brand-mark" aria-hidden="true">JB</span>
+      <span><strong>JB COFFEE SHOP</strong><small>YOUR COFFEE, YOUR WAY</small></span>
+    </a>
+    <div class="top-actions">
+      <button class="btn btn-quiet" id="trackButton">Track Order</button>
+      <button class="btn btn-quiet" id="staffButton">Staff</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <section id="welcomeView" class="view">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">FRESHLY MADE • MADE FOR YOU</p>
+          <h1>Good coffee.<br><em>Good moments.</em></h1>
+          <p>Choose your favorites, make them your own, and place your order right here.</p>
+          <button class="btn btn-primary btn-large" id="startOrder">Start your order <span>→</span></button>
+        </div>
+        <div class="hero-cup" aria-hidden="true"><div class="steam steam-one"></div><div class="steam steam-two"></div><div class="cup"><span>JB</span></div><div class="saucer"></div></div>
+      </div>
+      <div class="welcome-bottom">
+        <span>☕ Made fresh when you order</span><span>♡ Your daily coffee break</span><span>₱ Pay at the cashier or by GCash</span>
+      </div>
+    </section>
+
+    <section id="menuView" class="view hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE JB MENU</p><h1>What sounds good?</h1><p class="muted">Tap a drink to customize your order.</p></div>
+        <button class="btn btn-outline" id="backHome">← Home</button>
+      </div>
+      <div id="categoryTabs" class="category-tabs"></div>
+      <div class="order-layout">
+        <div id="menuGrid" class="menu-grid"></div>
+        <aside class="cart-panel">
+          <div class="cart-title"><h2>Your order</h2><span id="cartCount" class="count-badge">0</span></div>
+          <div id="cartItems" class="cart-items"><p class="empty-state">Your cart is waiting for something delicious.</p></div>
+          <div class="cart-total"><span>Total</span><strong id="cartTotal">₱0.00</strong></div>
+          <button class="btn btn-primary btn-block" id="checkoutButton" disabled>Continue to checkout</button>
+          <p class="tiny muted">Payment is completed separately. No payment is taken by this screen.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="checkoutView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">ALMOST THERE</p><h1>Review your order</h1><p class="muted">Check your items and choose how you will pay.</p></div><button class="btn btn-outline" id="backToMenu">← Back to menu</button></div>
+      <div class="checkout-layout">
+        <div class="checkout-card">
+          <label for="customerName">Name or nickname <span class="muted">(optional)</span></label>
+          <input id="customerName" maxlength="40" placeholder="e.g. Alex">
+          <h2>Payment method</h2>
+          <div class="payment-options">
+            <label class="payment-option"><input type="radio" name="paymentMethod" value="Cash at cashier" checked><span><b>💵 Cash at cashier</b><small>Pay when you present your order number.</small></span></label>
+            <label class="payment-option"><input type="radio" name="paymentMethod" value="GCash / QR"><span><b>📱 GCash / QR</b><small>Show the cashier your payment confirmation.</small></span></label>
+          </div>
+          <div id="gcashNotice" class="notice hidden">Please pay using the shop's official GCash QR displayed by the cashier. This demo does not verify payments automatically.</div>
+          <label for="orderNotes">Order notes <span class="muted">(optional)</span></label>
+          <textarea id="orderNotes" rows="2" maxlength="180" placeholder="Any special request?"></textarea>
+          <button class="btn btn-primary btn-block btn-large" id="placeOrder">Place order</button>
+          <p class="tiny muted">By placing your order, you agree to confirm payment with the cashier.</p>
+        </div>
+        <aside class="checkout-card"><h2>Order summary</h2><div id="checkoutSummary"></div><div class="cart-total"><span>Total due</span><strong id="checkoutTotal">₱0.00</strong></div></aside>
+      </div>
+    </section>
+
+    <section id="confirmationView" class="view hidden">
+      <div class="confirmation-card">
+        <div class="success-mark">✓</div><p class="eyebrow">ORDER RECEIVED</p><h1>Thank you!</h1><p>Your order has been saved on this device.</p>
+        <div class="order-number-label">YOUR ORDER NUMBER</div><div id="confirmationNumber" class="order-number">JB-0001</div>
+        <p id="confirmationPayment" class="muted"></p>
+        <div class="notice">Please pay the cashier and keep your order number. Staff will update the status when your order is being prepared and when it is ready.</div>
+        <button class="btn btn-primary btn-large" id="newOrder">Start a new order</button>
+      </div>
+    </section>
+
+    <section id="trackView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">ORDER STATUS</p><h1>Track your order</h1><p class="muted">Enter the number printed on your order confirmation.</p></div><button class="btn btn-outline" id="trackBack">← Back</button></div>
+      <div class="track-card"><label for="trackInput">Order number</label><input id="trackInput" placeholder="e.g. JB-0001"><button class="btn btn-primary btn-block" id="trackSearch">Find order</button><div id="trackResult" class="track-result"></div></div>
+    </section>
+
+    <section id="staffView" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">TEAM WORKSPACE</p><h1>Staff dashboard</h1><p class="muted">Manage orders and configure the kiosk.</p></div><button class="btn btn-outline" id="staffExit">← Exit staff</button></div>
+      <div id="staffLogin" class="staff-login">
+        <div class="checkout-card"><h2>Staff access</h2><p class="muted">Enter your staff PIN to open the dashboard.</p><label for="staffPin">Staff PIN</label><input id="staffPin" type="password" inputmode="numeric" maxlength="12" placeholder="Default PIN: 1234"><button class="btn btn-primary btn-block" id="staffLoginButton">Unlock dashboard</button><p class="tiny muted">Change the default PIN in app.js before using this on a public kiosk.</p></div>
+      </div>
+      <div id="staffDashboard" class="hidden">
+        <div class="stats-grid"><div class="stat-card"><span>Today's orders</span><strong id="statOrders">0</strong></div><div class="stat-card"><span>Open orders</span><strong id="statOpen">0</strong></div><div class="stat-card"><span>Today's sales*</span><strong id="statSales">₱0</strong></div></div>
+        <div class="staff-toolbar"><div class="filter-tabs" id="orderFilters"><button class="active" data-filter="All">All</button><button data-filter="New">New</button><button data-filter="Preparing">Preparing</button><button data-filter="Ready">Ready</button><button data-filter="Completed">Completed</button></div><button class="btn btn-outline" id="exportOrders">Export CSV</button></div>
+        <div id="staffOrders" class="staff-orders"></div>
+        <div class="staff-tools">
+          <div class="checkout-card"><h2>Shop settings</h2><label for="shopName">Shop name</label><input id="shopName" value="JB Coffee Shop"><label for="newPin">New staff PIN</label><input id="newPin" type="password" inputmode="numeric" placeholder="Enter new PIN"><label for="gcashInfo">Payment note</label><input id="gcashInfo" placeholder="e.g. Ask cashier for official GCash QR"><button class="btn btn-primary btn-block" id="saveSettings">Save settings</button><p class="tiny muted">Settings are saved in this browser on this device.</p></div>
+          <div class="checkout-card"><h2>Menu management</h2><p class="muted">Add a drink to the customer menu.</p><label for="newDrinkName">Drink name</label><input id="newDrinkName" placeholder="e.g. Spanish Latte"><label for="newDrinkCategory">Category</label><select id="newDrinkCategory"><option>Hot Coffee</option><option>Iced Coffee</option><option>Non-Coffee</option><option>Pastries</option></select><label for="newDrinkPrice">Price (₱)</label><input id="newDrinkPrice" type="number" min="1" step="1" placeholder="120"><label for="newDrinkDescription">Description</label><input id="newDrinkDescription" placeholder="Short description">
+            <label for="newDrinkImage">Coffee / product image</label>
+            <input id="newDrinkImage" type="file" accept="image/*">
+            <div id="newDrinkImagePreview" class="image-upload-preview hidden"><img id="newDrinkPreviewImg" alt="Selected product preview"><span>Image preview</span></div>
+            <p class="tiny muted">Choose a photo from your device. Images are resized before saving to help limit storage use.</p>
+            <button class="btn btn-primary btn-block" id="addDrink">Add menu item</button><div id="manageMenu" class="manage-menu"></div></div>
+        </div>
+        <div class="danger-zone"><div><b>Local data tools</b><p class="tiny muted">Export a backup regularly. Clearing data cannot be undone.</p></div><div class="danger-actions"><button class="btn btn-outline" id="backupData">Download backup</button><button class="btn btn-danger" id="clearCompleted">Delete completed orders</button></div></div>
+      </div>
+    </section>
+  </main>
+  <footer><span>© <span id="year"></span> JB Coffee Shop</span></footer>
+
+  <dialog id="customizeDialog" class="customize-dialog">
+    <form method="dialog" id="customizeForm">
+      <button type="button" class="dialog-close" id="closeCustomize" aria-label="Close">×</button>
+      <p class="eyebrow">MAKE IT YOURS</p><h2 id="customizeTitle">Customize drink</h2><p id="customizeDescription" class="muted"></p>
+      <input type="hidden" id="customizeId">
+      <label for="customSize">Size</label><select id="customSize"><option value="Regular|0">Regular</option><option value="Large|25">Large (+₱25)</option></select>
+      <label for="customTemperature">Temperature</label><select id="customTemperature"><option>Hot</option><option>Iced</option></select>
+      <label for="customSweetness">Sweetness</label><select id="customSweetness"><option>Regular</option><option>Less sweet</option><option>No sugar</option><option>Extra sweet</option></select>
+      <label for="customMilk">Milk</label><select id="customMilk"><option>Regular milk</option><option>Oat milk (+₱25)</option><option>No milk</option></select>
+      <label for="customExtra">Extras</label><select id="customExtra"><option value="None|0">No extra</option><option value="Extra espresso shot|25">Extra espresso shot (+₱25)</option><option value="Whipped cream|15">Whipped cream (+₱15)</option></select>
+      <label for="customQty">Quantity</label><input id="customQty" type="number" min="1" max="20" value="1">
+      <div class="cart-total"><span>Item total</span><strong id="customPrice">₱0.00</strong></div>
+      <button type="button" class="btn btn-primary btn-block" id="addToCart">Add to order</button>
+    </form>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "JB Coffee Shop Kiosk",
+  "short_name": "JB Coffee",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbf6ee",
+  "theme_color": "#5c3b2e",
+  "description": "Offline-friendly self-service coffee ordering kiosk"
+}
